@@ -34,7 +34,7 @@ def start_mapping(start, end, address, min_block_height):
     token_state_mapping_process = Process(target=map_token_state)
     token_state_mapping_process.start()
 
-    app.run()
+    app.run(port=app.config['API_PORT'])
 
     if token_state_mapping_process.is_alive():
         click.echo('Terminating mapper.')

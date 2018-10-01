@@ -12,7 +12,7 @@ setup(
         'psycopg2',
         'requests',
         'sqlalchemy',
-        'flask==0.12.4',
+        'flask',
     ],
     setup_requires=[
         'pytest-runner',
