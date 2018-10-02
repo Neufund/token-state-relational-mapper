@@ -3,6 +3,7 @@
 """
 from .database.models import Transfer
 
+from web3 import Web3
 
 class EventAnalyzer:
     def __init__(self, event_name):
@@ -25,8 +26,8 @@ class TransferEventAnalyzer(EventAnalyzer):
             return Transfer(
                 block_time=event_dict['blockNumber'],
                 amount=event_dict['args']['_value'],
-                to_address=event_dict['args']['_to'],
-                from_address=event_dict['args']['_from'],
+                to_address=Web3.toChecksumAddress(event_dict['args']['_to']),
+                from_address=Web3.toChecksumAddress(event_dict['args']['_from']),
                 tx_hash=event_dict['transactionHash']
             )
         else:

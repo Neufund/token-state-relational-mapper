@@ -1,8 +1,8 @@
 import click
-
+from web3 import Web3
 
 def validate_address_parameter(ctx, param, value: str):
-    error_message = 'should be valid ethereum public address.'
+    error_message = 'should be valid ethereum public address (checksumed).'
     length_of_correct_ethereum_public_address = 40
 
     try:
@@ -11,6 +11,10 @@ def validate_address_parameter(ctx, param, value: str):
 
         if len(hex_address) != length_of_correct_ethereum_public_address:
             raise click.BadParameter(error_message)
+
+        if not Web3.isChecksumAddress(value):
+            not_checksumed_address_error_message = f'{error_message}. Correct value: {Web3.toChecksumAddress(value)}'
+            raise click.BadParameter(not_checksumed_address_error_message)
 
         return value
     except ValueError:

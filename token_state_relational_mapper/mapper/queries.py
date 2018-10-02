@@ -3,6 +3,7 @@ from sqlalchemy import desc, or_
 from token_state_relational_mapper.mapper.database import Block, Token, TokenHolder, Transfer, get_session
 from token_state_relational_mapper.mapper.utils import convert_to_real_value_string
 
+from web3 import Web3
 
 def get_token(contract_address):
     session = get_session()
@@ -13,7 +14,7 @@ def get_token(contract_address):
                       Token.total_tokens_created,
                       Token.total_tokens_destroyed,
                       Token.decimals) \
-            .filter_by(address=contract_address) \
+            .filter_by(address=Web3.toChecksumAddress(contract_address)) \
             .first()
 
     return {
